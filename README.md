@@ -2,6 +2,8 @@
  Tools to write out Siemens dissolved data to MRD format
 everything runs from the function "dissolved_to_ismrmd"
 
+Built off of code written by Andrew Hahn for GE data.
+
 I have functionality for 4 sequence versions (all that I've used at KUMC)
 1) Basic 1-point Dixon using John Mugler's sequence
 2) Basic 1-point Dixon + appended dissolved spectroscopy using John Mugler's sequence 

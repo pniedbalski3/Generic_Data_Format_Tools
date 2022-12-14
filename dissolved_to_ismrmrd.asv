@@ -6,21 +6,21 @@ function dissolved_to_ismrmrd(Xe_file,Subj_ID,mrdfile)
 %   Xe_file             -> Path to Dissolved Phase twix file (will prompt to select a file in a UI if not provided) 
 %
 %   Subj_ID             -> Subject ID (string) (will default to 'Deid' if
-%                          not provided 
+%                          not provided) 
 %
 
 %Make this so it can be done with just the name of the function if desired:
 if nargin == 0
     [Xe_file,mypath] = uigetfile('*.dat','Select Gas Exchange Raw Data file');
-    mrdfile = fullfile(mypath,'GX_raw.h5');
     Subj_ID = 'Deid';
+    mrdfile = fullfile(mypath,[Subj_ID 'dixon.h5']);
 elseif nargin == 1
     [mypath,~,~] = fileparts(Xe_file); 
-    mrdfile = fullfile(mypath,'GX_raw.h5');
     Subj_ID = 'Deid';
+    mrdfile = fullfile(mypath,[Subj_ID 'dixon.h5']);
 elseif nargin == 2
     [mypath,~,~] = fileparts(Xe_file); 
-    mrdfile = fullfile(mypath,'GX_raw.h5');
+    mrdfile = fullfile(mypath,[Subj_ID 'dixon.h5');
 end
 
 %Make sure file has .h5 extension
@@ -114,7 +114,7 @@ end
 % Append the acquisition block
 dset.appendAcquisition(acqblock);
 
-%% Try to upload the post-imaging spectra for calibration
+%% If available, upload the post-imaging spectra for calibration
 if ~isnan(sum(Post_Cal))
     acqblock = ismrmrd.Acquisition(1);
 

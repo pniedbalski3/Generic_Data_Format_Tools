@@ -12,15 +12,15 @@ function dissolved_to_ismrmrd(Xe_file,Subj_ID,mrdfile)
 %Make this so it can be done with just the name of the function if desired:
 if nargin == 0
     [Xe_file,mypath] = uigetfile('*.dat','Select Gas Exchange Raw Data file');
-    mrdfile = fullfile(mypath,'GX_raw.h5');
     Subj_ID = 'Deid';
+    mrdfile = fullfile(mypath,[Subj_ID '_dixon.h5']);
 elseif nargin == 1
     [mypath,~,~] = fileparts(Xe_file); 
-    mrdfile = fullfile(mypath,'GX_raw.h5');
     Subj_ID = 'Deid';
+    mrdfile = fullfile(mypath,[Subj_ID '_dixon.h5']);
 elseif nargin == 2
     [mypath,~,~] = fileparts(Xe_file); 
-    mrdfile = fullfile(mypath,'GX_raw.h5');
+    mrdfile = fullfile(mypath,[Subj_ID '_dixon.h5']);
 end
 
 %Make sure file has .h5 extension

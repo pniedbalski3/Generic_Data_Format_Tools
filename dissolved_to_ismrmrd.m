@@ -1,7 +1,7 @@
 function dissolved_to_ismrmrd(Xe_file,Subj_ID,mrdfile)
 %%
 %   mrdfile             -> Name of MRD file to write (will default to
-%                          'GX_raw.h5 if not provided)
+%                          'Subj_ID_dixon.h5 if not provided)
 %
 %   Xe_file             -> Path to Dissolved Phase twix file (will prompt to select a file in a UI if not provided) 
 %
@@ -12,7 +12,7 @@ function dissolved_to_ismrmrd(Xe_file,Subj_ID,mrdfile)
 %Make this so it can be done with just the name of the function if desired:
 if nargin == 0
     [Xe_file,mypath] = uigetfile('*.dat','Select Gas Exchange Raw Data file');
-    Subj_ID = 'Deid';
+    Subj_ID = 'Deid'; % Or maybe better to prompt user to type in Subject ID?
     mrdfile = fullfile(mypath,[Subj_ID '_dixon.h5']);
 elseif nargin == 1
     [mypath,~,~] = fileparts(Xe_file); 

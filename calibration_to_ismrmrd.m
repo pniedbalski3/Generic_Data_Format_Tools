@@ -73,7 +73,7 @@ acqblock = ismrmrd.Acquisition(nY);
 
 acqblock.head.version(:) = 1;
 acqblock.head.number_of_samples(:) = nX;
-acqblock.head.sample_time_us(:) = dwell_time;
+acqblock.head.sample_time_us(:) = dwell_time * 1e6; %dwell time currently in s
 acqblock.head.active_channels(:) = 1;
 
 for acqno = 1:nY

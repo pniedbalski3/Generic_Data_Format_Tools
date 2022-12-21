@@ -70,7 +70,7 @@ end
 
 nX = size(Gas_Fid,1);
 nY = size(Gas_Fid,2);
-tsp = Params.Dwell; %1e6/bw;
+tsp = Params.Dwell * 1e6; %need this in us %1e6/bw;
 acqblock = ismrmrd.Acquisition(2*nY);
 
 acqblock.head.version(:) = 1;

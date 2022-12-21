@@ -95,6 +95,12 @@ for acqno = 1:2*nY
     acqblock.head.scan_counter(acqno) = acqno-1;
     acqblock.head.idx.kspace_encode_step_1(acqno) = acqno-1;
     acqblock.head.idx.repetition(acqno) = 0;
+    %set contrast to differentiate dissolved/gas. 0 = gas. 1 = dissolved
+    if mod(acqno,2) == 0
+        acqblock.head.idx.contrast(acqno) = 1;
+    else
+        acqblock.head.idx.contrast(acqno) = 0;
+    end
     
     % Set the flags
     acqblock.head.flagClearAll(acqno);
@@ -130,6 +136,9 @@ if ~isnan(sum(Post_Cal))
     acqblock.head.scan_counter(1) = 0;
     acqblock.head.idx.kspace_encode_step_1(1) = 0;
     acqblock.head.idx.repetition(1) = 0;
+    %appended spectrum acquired on dissolved frequency, so set contrast to
+    %1
+    acqblock.head.idx.contrast(acqno) = 1;
     
     acqblock.head.flagSet('ACQ_FIRST_IN_ENCODE_STEP1', 1);
     acqblock.head.flagSet('ACQ_FIRST_IN_SLICE', 1);

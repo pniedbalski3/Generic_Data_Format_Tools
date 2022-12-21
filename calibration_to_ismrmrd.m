@@ -30,7 +30,7 @@ end
 
 %% Create an empty ismrmrd dataset
 if exist(mrdfile,'file')
-    error(['File ' filename ' already exists.  Please remove first'])
+    error(['File ' mrdfile ' already exists.  Please remove first'])
 end
 
 dset = ismrmrd.Dataset(mrdfile);
@@ -80,6 +80,13 @@ for acqno = 1:nY
     acqblock.head.scan_counter(acqno) = acqno-1;
     acqblock.head.idx.kspace_encode_step_1(acqno) = acqno-1;
     acqblock.head.idx.repetition(acqno) = 0;
+    
+    %Set contrasts - Gas = 0, Dissolved = 1
+    if acqno <= nDis+1 % first scan is noise, then dissolved, so need to add 1 to the number to get this right
+        acqblock.head.idx.contrast(acqno) = 1;
+    else
+        acqblock.head.idx.contrast(acqno) = 0;
+    end
     
     % Set the flags
     acqblock.head.flagClearAll(acqno);

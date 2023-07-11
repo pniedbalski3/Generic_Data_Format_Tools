@@ -1,14 +1,13 @@
 # Generic_Data_Format_Tools
- Tools to write out Siemens dissolved data to MRD format
-everything runs from the function "dissolved_to_ismrmd"
+ Tools to write hyperpolarized 129Xe MRI data acquired according to 129Xe MRI Clinical Trials Consortium Recommendations to MRD format. Currently, Siemens and GE data are supported.
 
-Built off of code written by Andrew Hahn for GE data.
+## Usage
+All functions are called from the master function xemri_mrd.m. Once run, this function will prompt the user to enter the participant ID and locate the raw data files that need to be converted. Converted MRD files will be written to the same path where the xenon MRI data is stored. 
 
-I have functionality for 4 sequence versions (all that I've used at KUMC)
-1) Basic 1-point Dixon using John Mugler's sequence
-2) Basic 1-point Dixon + appended dissolved spectroscopy using John Mugler's sequence 
-3) Spiral/Radial 1-point Dixon (Niedbalski Sequence)
-4) Spiral/Radial 1-point Dixon + appended dissolved spectroscopy (Niedbalski Sequence)
-
-
-(1) and (2) are currently differentiated using the sequence name stored in the twix file, as (2) is from a later version of John's code from (1). But, I suspect it may not properly read all files generically, so I'll have to go in and fix.
+## Site Specific Edits
+### In +GE/dissolved_to_ismrmrd.m
+- Line 32: File containing frequency offset
+- Lines 96-98: Scanner make, model, and institution
+### In +GE/calibration_to_ismrmrd.m
+- Line 20: File containing frequency offset
+- Lines 66-68: Scanner make, model, and institution 

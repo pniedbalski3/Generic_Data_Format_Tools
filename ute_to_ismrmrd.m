@@ -3,7 +3,7 @@ function ute_to_ismrmrd(ute_file,Subj_ID,mrdfile)
 %   mrdfile             -> Name of MRD file to write (will default to
 %                          'Subj_ID_dixon.h5 if not provided)
 %
-%   Xe_file             -> Path to Dissolved Phase twix file (will prompt to select a file in a UI if not provided) 
+%   ute_file             -> Path to 1H UTE (anatomic) twix file (will prompt to select a file in a UI if not provided) 
 %
 %   Subj_ID             -> Subject ID (string) ((will prompt user for
 %                          subject ID if not provided)
@@ -106,8 +106,8 @@ header.acquisitionSystemInformation.institutionName = twix.hdr.Dicom.Institution
 scanDate = twix.hdr.Phoenix.tReferenceImage0; 
 scanDate = strsplit(scanDate,'.');
 scanDate = scanDate{end};
-scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
-
+%scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
+scanDateStr = string(datetime(scanDate(1:4),scanDate(5:6),1));
 
 header.studyInformation.studyDate = scanDateStr;
 header.subjectInformation.patientID = Subj_ID;

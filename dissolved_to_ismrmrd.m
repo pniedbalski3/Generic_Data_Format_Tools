@@ -138,7 +138,7 @@ if ~isnan(sum(Post_Cal))
     acqblock.head.idx.repetition(1) = 0;
     %appended spectrum acquired on dissolved frequency, so set contrast to
     %1
-    acqblock.head.idx.contrast(acqno) = 1;
+    acqblock.head.idx.contrast(1) = 1;
     
     acqblock.head.flagSet('ACQ_FIRST_IN_ENCODE_STEP1', 1);
     acqblock.head.flagSet('ACQ_FIRST_IN_SLICE', 1);
@@ -165,7 +165,11 @@ header.acquisitionSystemInformation.systemVendor = Xe_Dat_twix.hdr.Dicom.Manufac
 header.acquisitionSystemInformation.systemModel = Xe_Dat_twix.hdr.Dicom.ManufacturersModelName;
 header.acquisitionSystemInformation.institutionName = Xe_Dat_twix.hdr.Dicom.InstitutionName;
 
-header.measurementInformation.scandate = Params.scandatestr;% ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-' h.rdb_hdr.scan_date(4:5)];
+Y = Params.scandatestr(1:4);
+M = Params.scandatestr(5:6);
+D = 1;
+
+header.measurementInformation.scandate = string(datetime(Y,M,D));%datetimeParams.scandatestr;% ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-' h.rdb_hdr.scan_date(4:5)];
 header.measurementInformation.patientPosition = '';
 
 %header.studyInformation.studyDate = ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-' h.rdb_hdr.scan_date(4:5)];

@@ -1,19 +1,19 @@
 function diff_to_ismrmrd(gre_file,Subj_ID,mrdfile)
 %% Handle Arguments
 if nargin == 0
-    [gre_file,mypath] = uigetfile('*.dat','Select GRE Raw Data file');
+    [gre_file,mypath] = uigetfile('*.dat','Select Diffusion Raw Data file');
     gre_file = fullfile(mypath,gre_file);
     Subj_ID = inputdlg('Subject ID','Input Subject ID',[1 50]); % Or maybe better to prompt user to type in Subject ID?
     Subj_ID = Subj_ID{1};
-    mrdfile = fullfile(mypath,[Subj_ID '_gre.h5']);
+    mrdfile = fullfile(mypath,[Subj_ID '_diff.h5']);
 elseif nargin == 1
     [mypath,~,~] = fileparts(gre_file); 
     Subj_ID = inputdlg('Subject ID','Input Subject ID',[1 50]); % Or maybe better to prompt user to type in Subject ID?
     Subj_ID = Subj_ID{1};
-    mrdfile = fullfile(mypath,[Subj_ID '_gre.h5']);
+    mrdfile = fullfile(mypath,[Subj_ID '_diff.h5']);
 elseif nargin == 2
     [mypath,~,~] = fileparts(gre_file); 
-    mrdfile = fullfile(mypath,[Subj_ID '_gre.h5']);
+    mrdfile = fullfile(mypath,[Subj_ID '_diff.h5']);
 end
 %% 
 if exist(mrdfile,'file')
@@ -58,9 +58,9 @@ for i = 1:(GRE_twix.image.NAcq)
     acqblock.head.idx.repetition(i) = GRE_twix.image.Rep(i)-1;
     acqblock.head.idx.contrast(i) = GRE_twix.image.Eco(i)-1;
     if GRE_twix.image.Eco(i) == 2
-        acqblock.head.user_float(i) = GRE_twix.hdr.MeasYaps.sWipMemBlock.adFree{12};
+        acqblock.head.user_float(1,i) = GRE_twix.hdr.MeasYaps.sWipMemBlock.adFree{12};
     else
-        acqblock.head.user_float(i) = 0;
+        acqblock.head.user_float(1,i) = 0;
     end
 
     % Set the flags

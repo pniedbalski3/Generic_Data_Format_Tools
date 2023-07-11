@@ -35,7 +35,7 @@ end
 
 %% Create an empty ismrmrd dataset
 if exist(mrdfile,'file')
-    error(['File ' mrdfile ' already exists.  Please remove first'])
+    delete(mrdfile)
 end
 
 % tmp = h5read('OUTPUT/MRI_Raw.h5','/Kdata/KData_E0_C0');
@@ -107,7 +107,7 @@ scanDate = twix.hdr.Phoenix.tReferenceImage0;
 scanDate = strsplit(scanDate,'.');
 scanDate = scanDate{end};
 %scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
-scanDateStr = string(datetime(scanDate(1:4),scanDate(5:6),1));
+scanDateStr = string(datetime(str2double(scanDate(1:4)),str2double(scanDate(5:6)),1));
 
 header.studyInformation.studyDate = scanDateStr;
 header.subjectInformation.patientID = Subj_ID;

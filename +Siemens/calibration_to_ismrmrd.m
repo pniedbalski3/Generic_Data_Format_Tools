@@ -30,7 +30,7 @@ end
 
 %% Create an empty ismrmrd dataset
 if exist(mrdfile,'file')
-    error(['File ' mrdfile ' already exists.  Please remove first'])
+    delete(mrdfile);
 end
 
 dset = ismrmrd.Dataset(mrdfile);
@@ -61,7 +61,7 @@ scanDate = Cal_Dat_twix.hdr.Phoenix.tReferenceImage0;
 scanDate = strsplit(scanDate,'.');
 scanDate = scanDate{end};
 %scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
-scanDateStr = string(datetime(scanDate(1:4),scanDate(5:6),1));
+scanDateStr = string(datetime(str2double(scanDate(1:4)),str2double(scanDate(5:6)),1));
 
 %Read data
 data = squeeze(double(Cal_Dat_twix.image()));

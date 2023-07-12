@@ -63,6 +63,13 @@ for acqno = 1:2*nY
     acqblock.head.scan_counter(acqno) = acqno-1;
     acqblock.head.idx.kspace_encode_step_1(acqno) = acqno-1;
     acqblock.head.idx.repetition(acqno) = 0;
+    %set contrast to differentiate dissolved/gas. 0 = gas. 1 = dissolved -
+    %Does this point correctly to GE data?
+    if mod(acqno,2) == 0
+        acqblock.head.idx.contrast(acqno) = 1;
+    else
+        acqblock.head.idx.contrast(acqno) = 0;
+    end
     
     % Set the flags
     acqblock.head.flagClearAll(acqno);
@@ -106,8 +113,9 @@ header.measurementInformation.patientPosition = '';
 header.subjectInformation.patientID = Subj_ID;
 
 header.sequenceParameters.TR = 0.0075;
-header.sequenceParameters.flipAngle_deg(1) = 0.5;
-header.sequenceParameters.flipAngle_deg(2) = 20;
+% For my purposes, default Dissolved to flip angle 1, Gas to Flip Angle 2
+header.sequenceParameters.flipAngle_deg(1) = 20;
+header.sequenceParameters.flipAngle_deg(2) = 0.5;
 header.sequenceParameters.TE = te90 + 40e-6;
 
 % The Encoding (Required)

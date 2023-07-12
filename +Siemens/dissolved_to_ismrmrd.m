@@ -122,35 +122,36 @@ end
 % Append the acquisition block
 dset.appendAcquisition(acqblock);
 
-%% If available, upload the post-imaging spectra for calibration
-if ~isnan(sum(Post_Cal))
-    acqblock = ismrmrd.Acquisition(1);
+%% If available, upload the post-imaging spectra for calibration - This needs to be fixed. Scrub for now
 
-    acqblock.head.version(:) = 1;
-    acqblock.head.number_of_samples(:) = length(Post_Cal);
-    acqblock.head.sample_time_us(:) = tsp;
-    acqblock.head.active_channels(:) = 1;
-    %acqblock.head.trajectory_dimensions = 3*ones(1,2*nY);
-    acqblock.head.measurement_uid = 1;
-
-    acqblock.head.scan_counter(1) = 0;
-    acqblock.head.idx.kspace_encode_step_1(1) = 0;
-    acqblock.head.idx.repetition(1) = 0;
-    %appended spectrum acquired on dissolved frequency, so set contrast to
-    %1
-    acqblock.head.idx.contrast(1) = 1;
-    
-    acqblock.head.flagSet('ACQ_FIRST_IN_ENCODE_STEP1', 1);
-    acqblock.head.flagSet('ACQ_FIRST_IN_SLICE', 1);
-    acqblock.head.flagSet('ACQ_FIRST_IN_REPETITION', 1);
-    acqblock.head.flagSet('ACQ_LAST_IN_ENCODE_STEP1', 1);
-    acqblock.head.flagSet('ACQ_LAST_IN_SLICE', 1);
-    acqblock.head.flagSet('ACQ_LAST_IN_REPETITION', 1);
-    
-    acqblock.data{1} = squeeze(Post_Cal);
-    acqblock.traj{1} = [];
-end
-dset.appendAcquisition(acqblock);
+% if ~isnan(sum(Post_Cal))
+%     acqblock = ismrmrd.Acquisition(1);
+% 
+%     acqblock.head.version(:) = 1;
+%     acqblock.head.number_of_samples(:) = length(Post_Cal);
+%     acqblock.head.sample_time_us(:) = tsp;
+%     acqblock.head.active_channels(:) = 1;
+%     %acqblock.head.trajectory_dimensions = 3*ones(1,2*nY);
+%     acqblock.head.measurement_uid = 1;
+% 
+%     acqblock.head.scan_counter(1) = 0;
+%     acqblock.head.idx.kspace_encode_step_1(1) = 0;
+%     acqblock.head.idx.repetition(1) = 0;
+%     %appended spectrum acquired on dissolved frequency, so set contrast to
+%     %1
+%     acqblock.head.idx.contrast(1) = 1;
+% 
+%     acqblock.head.flagSet('ACQ_FIRST_IN_ENCODE_STEP1', 1);
+%     acqblock.head.flagSet('ACQ_FIRST_IN_SLICE', 1);
+%     acqblock.head.flagSet('ACQ_FIRST_IN_REPETITION', 1);
+%     acqblock.head.flagSet('ACQ_LAST_IN_ENCODE_STEP1', 1);
+%     acqblock.head.flagSet('ACQ_LAST_IN_SLICE', 1);
+%     acqblock.head.flagSet('ACQ_LAST_IN_REPETITION', 1);
+% 
+%     acqblock.data{1} = squeeze(Post_Cal);
+%     acqblock.traj{1} = [];
+% end
+% dset.appendAcquisition(acqblock);
 
 %%
 header = [];

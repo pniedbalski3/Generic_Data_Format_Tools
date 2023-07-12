@@ -11,8 +11,6 @@ function dissolved_to_ismrmrd(Xe_file,Subj_ID,mrdfile)
 %   Xe_file{3}          -> Mat file generated from recon_calibration
 %                         (e.g ScanArchive*.mat, NOT Spect_ScanArchive.mat)
 
-
-
 %% Create an empty ismrmrd dataset
 if exist(mrdfile,'file')
     error(['File ' filename ' already exists.  Please remove first'])
@@ -65,6 +63,12 @@ for acqno = 1:2*nY
     acqblock.head.scan_counter(acqno) = acqno-1;
     acqblock.head.idx.kspace_encode_step_1(acqno) = acqno-1;
     acqblock.head.idx.repetition(acqno) = 0;
+    %set contrast to differentiate dissolved/gas. 0 = gas. 1 = dissolved
+    if mod(acqno,2) == 0
+        acqblock.head.idx.contrast(acqno) = 1;
+    else
+        acqblock.head.idx.contrast(acqno) = 0;
+    end
     
     % Set the flags
     acqblock.head.flagClearAll(acqno);
@@ -99,7 +103,8 @@ header.acquisitionSystemInformation.systemVendor = 'GE';
 header.acquisitionSystemInformation.systemModel = 'Premiere';
 header.acquisitionSystemInformation.institutionName = 'University of Iowa';
 
-header.measurementInformation.scandate = ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-' h.rdb_hdr.scan_date(4:5)];
+%header.measurementInformation.scandate = ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-' h.rdb_hdr.scan_date(4:5)];
+header.measurementInformation.scandate = ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-1'];
 header.measurementInformation.patientPosition = '';
 
 %header.studyInformation.studyDate = ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-' h.rdb_hdr.scan_date(4:5)];

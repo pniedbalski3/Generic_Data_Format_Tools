@@ -30,10 +30,20 @@ acqblock.head.number_of_samples(:) = nX;
 acqblock.head.sample_time_us(:) = tsp;
 acqblock.head.active_channels(:) = 1;
 
+% It would be really great to mark which spectra are dissolved and which
+% are gas.
+nDis = 500; %PJN - Don't like the hardcoding... Any way around this?
+
 for acqno = 1:nY
     acqblock.head.scan_counter(acqno) = acqno-1;
     acqblock.head.idx.kspace_encode_step_1(acqno) = acqno-1;
     acqblock.head.idx.repetition(acqno) = 0;
+
+    if acqno <= nDis % first scan is noise, then dissolved, so need to add 1 to the number to get this right
+        acqblock.head.idx.contrast(acqno) = 1;
+    else
+        acqblock.head.idx.contrast(acqno) = 0;
+    end
     
     % Set the flags
     acqblock.head.flagClearAll(acqno);

@@ -40,7 +40,7 @@ Cal_Dat_twix = DataImport.mapVBVD(Cal_file,'ignoreSeg');
 
 % Get various scan parameters
 dwell_time = Cal_Dat_twix.hdr.MeasYaps.sRXSPEC.alDwellTime{1,1};
-dwell_time=dwell_time*1E-9; 
+dwell_time=dwell_time*1E-3; %Convert from ns to us. 
 % nFids = Cal_Dat_twix.hdr.Config.NRepMeas;
 % nPts = Cal_Dat_twix.hdr.Config.VectorSize;
 freq = Cal_Dat_twix.hdr.Dicom.lFrequency;
@@ -156,7 +156,7 @@ header.encoding.encodingLimits.repetition.center = 0;
 % Custom trajectory parameters
 
 up(1).name = "dwellTime";
-up(1).value = dwell_time;
+up(1).value = dwell_time; %GE saves as us, so match that. doesn't really matter, as long as consistent
 up(2).name = "gasExciteFrequency";
 up(2).value = freq;
 up(3).name = "dissolvedExciteFrequency";

@@ -4,6 +4,10 @@
 ## Usage
 All functions are called from the master function xemri_mrd.m. Once run, this function will prompt the user to enter the participant ID and locate the raw data files that need to be converted. Converted MRD files will be written to the same path where the xenon MRI data is stored. 
 
+## Dependencies
+In order to write to MRD files, you'll need the ismrmrd repository: https://github.com/ismrmrd/ismrmrd
+Add the ismrmrd/matlab folder to your matlab path.
+
 ## Site Specific Edits
 ### In +GE/dissolved_to_ismrmrd.m
 - Line 32: File containing frequency offset

@@ -25,7 +25,9 @@ dset = ismrmrd.Dataset(mrdfile);
 
 %Read in gre data
 GRE_twix = DataImport.mapVBVD(gre_file,'ignoreSeg');
-
+if length(GRE_twix) > 1
+    GRE_twix = GRE_twix{end};
+end
 % Get various scan parameters
 scanDate = GRE_twix.hdr.Phoenix.tReferenceImage0; 
 scanDate = strsplit(scanDate,'.');

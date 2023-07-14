@@ -207,7 +207,7 @@ header.encoding.encodingLimits.repetition.center = 0;
 % Custom trajectory parameters
 
 up(1).name = "dwellTime";
-up(1).value = Params.Dwell;
+up(1).value = Params.Dwell * 10e6; %Convert from s to us
 up(2).name = "rampTime";
 up(2).value = Params.Ramp_Time;
 up(3).name = "gasExciteFrequency";

@@ -4,6 +4,9 @@ platform = questdlg('On what platform was your data acquired','Platform','Siemen
 
 switch platform
     case 'Siemens'
+        if ~ispc 
+            menu('Select Gas Exchange, then Calibration, then Anatomic Raw Data','OK'); 
+        end
         [xe_file_a,xe_path] = uigetfile('*.dat','Select Gas Exchange Raw Data file');
         xe_file = fullfile(xe_path,xe_file_a);
         [cal_file_a,cal_path] = uigetfile('*.dat','Select Calibration Raw Data file');

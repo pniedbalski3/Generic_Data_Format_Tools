@@ -5,6 +5,9 @@ idcs = strfind(parent_path,filesep);%determine location of file separators
 parent_path = parent_path(1:idcs(end-1)-1);
 
 twix = DataImport.mapVBVD(ute_file);
+if length(twix) > 1
+    twix = twix{end};
+end
 twix.flagIgnoreSeg = 1;
 twix.image.flagIgnoreSeg = 1;
 twix.image.flagAverageReps = 1;

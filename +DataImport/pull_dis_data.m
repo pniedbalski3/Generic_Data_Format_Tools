@@ -38,7 +38,7 @@ Seq_Name = Xe_Dat_twix.hdr.Config.SequenceFileName;
 
 % Handle Mugler and Niedbalski sequences:
 if contains(Seq_Name,'xe_radial_Dixon')
-    if str2double(Seq_Name((end-3):end)) >= 2102
+    if str2double(Seq_Name((end-3):end)) >= 2102 && Xe_Dat_twix.image.NPar > 1
         Ver = 'Mugler_spec';
     else
         Ver = 'Mugler_basic';

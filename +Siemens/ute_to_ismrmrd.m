@@ -95,6 +95,10 @@ header = [];
 header.experimentalConditions.H1resonanceFrequency_Hz = 128000000; % 3T
 
 twix = DataImport.mapVBVD(ute_file);
+if length(twix) > 1
+    twix = twix{end};
+end
+
 % Acquisition System Information (Optional)
 header.acquisitionSystemInformation.receiverChannels = size(data,2);
 header.acquisitionSystemInformation.systemFieldStrength_T = twix.hdr.Dicom.flMagneticFieldStrength;

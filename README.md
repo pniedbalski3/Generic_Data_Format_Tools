@@ -8,6 +8,9 @@ All functions are called from the master function xemri_mrd.m. Once run, this fu
 In order to write to MRD files, you'll need the ismrmrd repository: https://github.com/ismrmrd/ismrmrd
 Add the ismrmrd/matlab folder to your matlab path.
 
+## File Contents
+Detailed specifications for the contents of each generated MRD file are contained in MRD_Spec.md
+
 ## Site Specific Edits
 ### In +GE/dissolved_to_ismrmrd.m
 - Line 32: File containing frequency offset

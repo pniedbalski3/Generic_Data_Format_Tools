@@ -32,8 +32,8 @@ end
 scanDate = GRE_twix.hdr.Phoenix.tReferenceImage0; 
 scanDate = strsplit(scanDate,'.');
 scanDate = scanDate{end};
-%scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
-scanDateStr = string(datetime(str2num(scanDate(1:4)),str2num(scanDate(5:6)),1));
+scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
+%scanDateStr = string(datetime(str2num(scanDate(1:4)),str2num(scanDate(5:6)),1));
 
 %Read data
 data = double(GRE_twix.image());
@@ -110,6 +110,7 @@ header.acquisitionSystemInformation.institutionName = GRE_twix.hdr.Dicom.Institu
 
 
 header.studyInformation.studyDate = scanDateStr;
+header.measurementInformation.patientPosition = '';
 header.subjectInformation.patientID = Subj_ID;
 
 

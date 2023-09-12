@@ -39,6 +39,10 @@ Xe_Dat_twix.flagAverageReps = 1;
 %% Function to pull data from twix files of standard methods (Mugler and Niedbalski-built) at KUMC 
 [Dis_Fid,Gas_Fid,Dis_Traj,Gas_Traj,Params,Post_Cal] = DataImport.pull_dis_data(Xe_file);
 
+scanDate = Xe_Dat_twix.hdr.Phoenix.tReferenceImage0; 
+scanDate = strsplit(scanDate,'.');
+scanDate = scanDate{end};
+scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
 %% Should have all data, can move forward with writing: 
 %% Create an empty ismrmrd dataset
 if exist(mrdfile,'file')
@@ -166,13 +170,9 @@ header.acquisitionSystemInformation.systemVendor = Xe_Dat_twix.hdr.Dicom.Manufac
 header.acquisitionSystemInformation.systemModel = Xe_Dat_twix.hdr.Dicom.ManufacturersModelName;
 header.acquisitionSystemInformation.institutionName = Xe_Dat_twix.hdr.Dicom.InstitutionName;
 
-Y = str2double(Params.scandatestr(1:4));
-M = str2double(Params.scandatestr(6:7));
-D = 1;
-
-header.measurementInformation.scandate = string(datetime(Y,M,D));%datetimeParams.scandatestr;% ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-' h.rdb_hdr.scan_date(4:5)];
+%header.measurementInformation.scandate = string(datetime(Y,M,D));%datetimeParams.scandatestr;% ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-' h.rdb_hdr.scan_date(4:5)];
 header.measurementInformation.patientPosition = '';
-
+header.studyInformation.studyDate = scanDateStr;
 %header.studyInformation.studyDate = ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-' h.rdb_hdr.scan_date(4:5)];
 header.subjectInformation.patientID = Subj_ID;
 

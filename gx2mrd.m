@@ -19,9 +19,15 @@ end
 
 % Send to platform-specific MRD converters
 if strcmp(fileext,'.dat')
-    Siemens.dissolved_to_ismrmrd(xe_file,Subj_ID,fullfile(xe_path,[Subj_ID '_dixon.h5']));
+    %Try both John's xpdixon as well as the normal way
+    try
+        Siemens.xpdixon_2303_2_mrd(xe_file,Subj_ID,fullfile(xe_path,[Subj_ID '_dixon.h5']));
+    catch
+        Siemens.dissolved_to_ismrmrd(xe_file,Subj_ID,fullfile(xe_path,[Subj_ID '_dixon.h5']));
+    end
     Siemens.calibration_to_ismrmrd(cal_file,Subj_ID,fullfile(xe_path,[Subj_ID '_cali.h5']));
     Siemens.ute_to_ismrmrd(ute_file,Subj_ID,fullfile(xe_path,[Subj_ID '_ute.h5']));
+    
 else
     GE.dissolved_to_ismrmrd(xe_file,Subj_ID,fullfile(xe_path,[Subj_ID '_dixon.h5']));
     GE.calibration_to_ismrmrd(cal_file,Subj_ID,fullfile(xe_path,[Subj_ID '_cali.h5']))

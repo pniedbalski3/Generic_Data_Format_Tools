@@ -60,8 +60,8 @@ end
 scanDate = Cal_Dat_twix.hdr.Phoenix.tReferenceImage0; 
 scanDate = strsplit(scanDate,'.');
 scanDate = scanDate{end};
-%scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
-scanDateStr = string(datetime(str2double(scanDate(1:4)),str2double(scanDate(5:6)),1));
+scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
+%scanDateStr = string(datetime(str2double(scanDate(1:4)),str2double(scanDate(5:6)),1));
 
 %Read data
 data = squeeze(double(Cal_Dat_twix.image()));
@@ -120,7 +120,7 @@ header.acquisitionSystemInformation.systemVendor = Cal_Dat_twix.hdr.Dicom.Manufa
 header.acquisitionSystemInformation.systemModel = Cal_Dat_twix.hdr.Dicom.ManufacturersModelName;
 header.acquisitionSystemInformation.institutionName = Cal_Dat_twix.hdr.Dicom.InstitutionName;
 
-header.measurementInformation.scandate = scanDateStr;
+header.studyInformation.studyDate = scanDateStr;
 header.measurementInformation.patientPosition = '';
 %header.studyInformation.studyDate = ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-' h.rdb_hdr.scan_date(4:5)];
 header.subjectInformation.patientID = Subj_ID;

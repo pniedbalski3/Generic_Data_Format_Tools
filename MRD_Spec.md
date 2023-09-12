@@ -13,7 +13,7 @@ The suffixes used are as follows:
 - Gas Exchange Image: **dixon**
 - Anatomic Image for Gas Exchange: **ute**
 ## Scan date information
-In order to fully deidentify data files, the scan date is not included in the MRD file. Rather, the 1st of the month in which the data was acquired is stored in the MRD file.
+Scan Date should be included in files. A separate script (deid_mrd.m) can be used to remove scan date in order to have fully deidentified raw data files.
 ## Metadata common to all files
 In order to facilitate reconstruction and analysis of images, the following metadata is included in the header of all generated MRD files:
 - **Nominal Field strength (in units of 1H resonance frequency)**: header.experimentalConditions.H1resonanceFrequency_Hz

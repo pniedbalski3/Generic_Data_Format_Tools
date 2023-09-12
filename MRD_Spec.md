@@ -80,13 +80,13 @@ This file is generated and has the same looping and metadata information as vent
 - They frequency at which spectra are acquired is stored under contrast (1 for dissolved, 0 for gas)
 
 **Additional Metadata**
-- **TR**: header.sequenceParameters.TR
+- **TR (in ms)**: header.sequenceParameters.TR
 - **Gas Flip Angle**: header.sequenceParameters.flipAngle_deg(1)
 - **Dissolved Flip Angle**: header.sequenceParameters.flipAngle_deg(2)
-- **TE**: header.sequenceParameters.TE
-- **Dwell Time**: header.encoding.trajectoryDescription.userParameterDouble(1).value
-- **Gas Frequency**: header.encoding.trajectoryDescription.userParameterDouble(2).value
-- **Dissolved Frequency**: header.encoding.trajectoryDescription.userParameterDouble(3).value
+- **TE (in ms)**: header.sequenceParameters.TE
+- **Dwell Time (in us)**: header.encoding.trajectoryDescription.userParameterDouble(1).value
+- **Gas Frequency (in Hz)**: header.encoding.trajectoryDescription.userParameterDouble(2).value
+- **Dissolved Frequency (in Hz)**: header.encoding.trajectoryDescription.userParameterDouble(3).value
 
 ### Gas Exchange (ParticipantID_dixon.h5)
 Because the gas exchange data is collected using 3D radial trajectories, it is important to store the trajectories alongside the imaging data.
@@ -95,11 +95,11 @@ Because the gas exchange data is collected using 3D radial trajectories, it is i
 - Similar to calibration, the frequency at which projections are acquired is stored under contrast (1 for dissolved, 0 for gas)
 
 **Additional Metadata**
-- **TR**: header.sequenceParameters.TR
+- **TR (in ms)**: header.sequenceParameters.TR
 - **Gas Flip Angle**: header.sequenceParameters.flipAngle_deg(1)
 - **Dissolved Flip Angle**: header.sequenceParameters.flipAngle_deg(2)
-- **TE**: header.sequenceParameters.TE
-- **Dwell Time**: header.encoding.trajectoryDescription.userParameterDouble(1).value
-- **Ramp Time**: header.encoding.trajectoryDescription.userParameterDouble(2).value
-- **Gas Frequency**: header.encoding.trajectoryDescription.userParameterDouble(3).value
-- **Dissolved Frequency**: header.encoding.trajectoryDescription.userParameterDouble(4).value
+- **TE (in ms)**: header.sequenceParameters.TE
+- **Dwell Time (in us)**: header.encoding.trajectoryDescription.userParameterDouble(1).value
+- **Ramp Time (in us)**: header.encoding.trajectoryDescription.userParameterDouble(2).value
+- **Gas Frequency (in Hz)**: header.encoding.trajectoryDescription.userParameterDouble(3).value
+- **Dissolved Frequency (in Hz)**: header.encoding.trajectoryDescription.userParameterDouble(4).value

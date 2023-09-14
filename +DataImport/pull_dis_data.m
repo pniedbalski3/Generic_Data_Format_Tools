@@ -110,8 +110,8 @@ switch Ver
         Xe_Raw = double(squeeze(Xe_Dat_twix.image()));
         Dis_Fid = Xe_Raw(:,:,2);
         Gas_Fid = Xe_Raw(:,:,1);
-        Gas_Traj = Reconstruction.gas_exchange_traj_gen(size(Xe_Raw,1),size(Xe_Raw,2),Xe_Dat_twix);
-        Dis_Traj = Reconstruction.gas_exchange_traj_gen(size(Xe_Raw,1),size(Xe_Raw,2),Xe_Dat_twix);
+        Gas_Traj = DataImport.gas_exchange_traj_gen(size(Xe_Raw,1),size(Xe_Raw,2),Xe_Dat_twix);
+        Dis_Traj = DataImport.gas_exchange_traj_gen(size(Xe_Raw,1),size(Xe_Raw,2),Xe_Dat_twix);
         
         Params.imsize = Xe_Dat_twix.hdr.MeasYaps.sKSpace.lBaseResolution;
         Params.TR = (Xe_Dat_twix.hdr.MeasYaps.alTR{1}/1000)*2;

@@ -216,11 +216,11 @@ header.subjectInformation.patientID = Subj_ID;
 
 
 header.sequenceParameters.TR = twix_obj.hdr.MeasYaps.alTR{1}+twix_obj.hdr.MeasYaps.alTR{2};
-header.sequenceParameters.flipAngle_deg(1) = twix_obj.hdr.MeasYaps.adFlipAngleDegree{1};
+header.sequenceParameters.flipAngle_deg(1) = twix_obj.hdr.MeasYaps.adFlipAngleDegree{2};
 header.sequenceParameters.flipAngle_deg(2) = twix_obj.hdr.MeasYaps.adFlipAngleDegree{3};
 TE = zeros(1,Tot_Echoes);
 for i = 1:size(Gas,3)
-    TE(i) = twix_obj.hdr.MeasYaps.alTE{i};
+    TE(i) = twix_obj.hdr.MeasYaps.alTE{i}+4;
 end
 for i = 1:size(Dis,3)
     TE(i+size(Gas,3)) = twix_obj.hdr.MeasYaps.alTE{i+8}; %Dissolved TE's appear to start at index 9?

@@ -25,11 +25,11 @@ if strcmp(fileext,'.dat')
     catch
         Siemens.dissolved_to_ismrmrd(xe_file,Subj_ID,fullfile(xe_path,[Subj_ID '_dixon.h5']));
     end
-    Siemens.calibration_to_ismrmrd(cal_file,Subj_ID,fullfile(xe_path,[Subj_ID '_cali.h5']));
-    Siemens.ute_to_ismrmrd(ute_file,Subj_ID,fullfile(xe_path,[Subj_ID '_ute.h5']));
+    Siemens.calibration_to_ismrmrd(cal_file,Subj_ID,fullfile(xe_path,[Subj_ID '_calibration.h5']));
+    Siemens.ute_to_ismrmrd(ute_file,Subj_ID,fullfile(xe_path,[Subj_ID '_proton.h5']));
     
 else
     GE.dissolved_to_ismrmrd(xe_file,Subj_ID,fullfile(xe_path,[Subj_ID '_dixon.h5']));
-    GE.calibration_to_ismrmrd(cal_file,Subj_ID,fullfile(xe_path,[Subj_ID '_cali.h5']))
-    GE.ute_to_ismrmrd(ute_file,Subj_ID,fullfile(xe_path,[Subj_ID '_ute.h5']));
+    GE.calibration_to_ismrmrd(cal_file,Subj_ID,fullfile(xe_path,[Subj_ID '_calibration.h5']))
+    GE.ute_to_ismrmrd(ute_file,Subj_ID,fullfile(xe_path,[Subj_ID '_proton.h5']));
 end

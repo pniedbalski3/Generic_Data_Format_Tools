@@ -16,7 +16,7 @@ elseif nargin < 2
     xe_file = fullfile(xe_path,xe_file_a);
 end
 
-[~,~,fileext] = fileparts(xe_file);
+[xe_path,~,fileext] = fileparts(xe_file);
 if strcmp(fileext,'.dat')
     Siemens.diff_to_ismrmrd(xe_file,Subj_ID,fullfile(xe_path,[Subj_ID '_diff.h5']));
 else

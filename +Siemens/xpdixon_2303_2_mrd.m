@@ -92,13 +92,13 @@ for acqno = 1:Tot_Echoes*nY
     line = floor((acqno-1)/Tot_Echoes);
     acqblock.head.idx.kspace_encode_step_1(acqno) = line;
     acqblock.head.idx.repetition(acqno) = 0;
-    %set contrast to differentiate dissolved/gas. 0 = gas. 1 = dissolved
+    %set contrast to differentiate dissolved/gas. 1 = gas. 2 = dissolved
     if echo < size(Gas,3) + 1 %mrd doesn't have a place for echo, so call it set instead
         acqblock.head.idx.set(acqno) = echo;
-        acqblock.head.idx.contrast(acqno) = 0;
+        acqblock.head.idx.contrast(acqno) = 1;
     else
         acqblock.head.idx.set(acqno) = echo - size(Gas,3);
-        acqblock.head.idx.contrast(acqno) = 1;
+        acqblock.head.idx.contrast(acqno) = 2;
     end
     echo = echo + 1;
     if echo > Tot_Echoes
@@ -141,8 +141,8 @@ for i = 1:size(PostDis,2)
     acqblock.head.idx.repetition(i) = 0;
     acqblock.head.measurement_uid(i) = 1; %Identify the spectra easily
     %appended spectrum acquired on dissolved frequency, so set contrast to
-    %1
-    acqblock.head.idx.contrast(i) = 1;
+    %2
+    acqblock.head.idx.contrast(i) = 2;
 
     if i == 1
         acqblock.head.flagSet('ACQ_FIRST_IN_ENCODE_STEP1', 1);
@@ -175,7 +175,7 @@ for i = 1:size(PostGas,2)
     acqblock.head.idx.repetition(i) = 0;
     %appended spectrum acquired on gas frequency, so set contrast to
     %1
-    acqblock.head.idx.contrast(i) = 0;
+    acqblock.head.idx.contrast(i) = 1;
 
     if i == 1
         acqblock.head.flagSet('ACQ_FIRST_IN_ENCODE_STEP1', 1);
@@ -215,7 +215,8 @@ header.studyInformation.studyDate = scanDateStr;
 header.subjectInformation.patientID = Subj_ID;
 
 
-header.sequenceParameters.TR = twix_obj.hdr.MeasYaps.alTR{1}+twix_obj.hdr.MeasYaps.alTR{2};
+header.sequenceParameters.TR(1) = twix_obj.hdr.MeasYaps.alTR{2};
+header.sequenceParameters.TR(2) = twix_obj.hdr.MeasYaps.alTR{3};
 header.sequenceParameters.flipAngle_deg(1) = twix_obj.hdr.MeasYaps.adFlipAngleDegree{2};
 header.sequenceParameters.flipAngle_deg(2) = twix_obj.hdr.MeasYaps.adFlipAngleDegree{3};
 TE = zeros(1,Tot_Echoes);
@@ -253,18 +254,19 @@ header.encoding.encodingLimits.repetition.center = 0;
 
 % Custom trajectory parameters
 
-up(1).name = "dwellTime";
-up(1).value = Dwell * 1e6; %Convert from s to us
-up(2).name = "rampTime";
-up(2).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{8};
-up(3).name = "gasExciteFrequency";
-up(3).value = twix_obj.hdr.Dicom.lFrequency;
-up(4).name = "dissolvedExciteFrequency";
-up(4).value = (twix_obj.hdr.Dicom.lFrequency + twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{5});
+%up(1).name = "dwellTime";
+%up(1).value = Dwell * 1e6; %Convert from s to us
+a(1).name = "rampTime";
+a(1).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{8};
+up(1).name = "129Xe_center_frequency";
+up(1).value = twix_obj.hdr.Dicom.lFrequency;
+up(2).name = "129Xe_dissolved_offset_frequency";
+up(2).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{5};
 
 header.encoding.trajectoryDescription.identifier = "Custom Trajectory Info";
-header.encoding.trajectoryDescription.userParameterDouble = up;
+header.encoding.trajectoryDescription.userParameterDouble = a;
 header.encoding.trajectoryDescription.userParameterLong = [];
+header.userParameters.userParameterLong = up;
 
 %% Serialize and write to the data set
 xmlstring = ismrmrd.xml.serialize(header);

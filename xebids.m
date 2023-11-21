@@ -1,12 +1,16 @@
-function xebids()
+function sub_dir = xebids(output_dir)
 %% 
+
+if nargin < 1
+    output_dir = pwd;
+end
 
 Subj_ID = inputdlg('Participant ID','Input Participant ID',[1 50]); % Prompt User for Participant ID
 Subj_ID = Subj_ID{1};
 
 %Default output directory is the present working directory. Strongly
 %suggest changing this.
-output_dir = pwd;
+
 
 sub_dir = fullfile(output_dir,['sub-' Subj_ID]);
 
@@ -54,6 +58,40 @@ if ismember(2,Files_Acquired)
     catch
     end
     json_write(fullfile(dicoms(1).folder,dicoms(1).name),fullfile(vent_dir,nii_name));
+%Next do anatomic
+    nii_name = ['sub-' Subj_ID '_T1w'];
+    
+    %vent2mrd(Subj_ID);
+    vent_dir = fullfile(sub_dir,'anat');
+    if ~isfolder(vent_dir)
+        mkdir(vent_dir);
+    end
+    vent_path = uigetdir('','Select Ventilation Anatomic DICOM Folder'); 
+    
+    dicoms = dir(vent_path);
+    dicoms(1:2) = [];
+    
+    %write nii to vent dir
+    dicm2nii(vent_path,vent_dir,1);
+    vent_conv = dir(vent_dir);
+    
+    cell_names = struct2cell(vent_conv);
+    cell_names = cell_names(1,:);
+    ind = find(contains(cell_names,'.nii.gz'));
+    
+    movefile(fullfile(vent_conv(ind).folder,vent_conv(ind).name),fullfile(vent_dir,[nii_name '.nii.gz']));
+    ind2 = find(contains(cell_names,'.json'));
+    ind3 = find(contains(cell_names,'.mat'));
+    
+    try
+        delete(fullfile(vent_conv(ind2).folder,vent_conv(ind2).name))
+    catch
+    end
+    try
+        delete(fullfile(vent_conv(ind3).folder,vent_conv(ind3).name))
+    catch
+    end
+  %  json_write(fullfile(dicoms(1).folder,dicoms(1).name),fullfile(vent_dir,nii_name));
 end
 if ismember(3,Files_Acquired)
     %diff2mrd(Subj_ID);
@@ -103,6 +141,18 @@ if ismember(3,Files_Acquired)
     
 end
 if ismember(4,Files_Acquired)
-    gx2mrd(Subj_ID);
+    %gx2mrd(Subj_ID);
+    [file_name,file_path] = uigetfile('.h5','Select Dixon MRD File');
+    gx_file = fullfile(file_path,file_name);
+    cal_file = strrep(gx_file,'dixon','calibration');
+    anat_file = strrep(gx_file,'dixon','proton');
+   
+    gx_dir = fullfile(sub_dir,'xegx');
+    if ~isfolder(gx_dir)
+        mkdir(gx_dir);
+    end
+    copyfile(gx_file,gx_dir);
+    copyfile(cal_file,gx_dir);
+    copyfile(anat_file,gx_dir);
 end
 

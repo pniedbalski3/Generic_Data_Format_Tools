@@ -57,7 +57,7 @@ end
 %no longer nan, so we can read in trajectories. Otherwise, we'll have to
 %calculate theoretical
 if ~isnan(proper_traj)
-    traj_twix = mapVBVD(fullfile(parent_path,'Traj',all_traj(proper_traj).name));
+    traj_twix = DataImport.mapVBVD(fullfile(parent_path,'Traj',all_traj(proper_traj).name));
     if length(traj_twix)>1
         traj_twix = traj_twix{2};
     end

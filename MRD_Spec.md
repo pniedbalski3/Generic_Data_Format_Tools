@@ -9,9 +9,9 @@ The suffixes used are as follows:
 - Ventilation Image: **vent**
 - Anatomic Image for Ventilation: **ventanat**
 - Diffusion Image: **diff**
-- Calibration Image: **cali**
+- Calibration Image: **calibration**
 - Gas Exchange Image: **dixon**
-- Anatomic Image for Gas Exchange: **ute**
+- Anatomic Image for Gas Exchange: **proton**
 ## Scan date information
 Scan Date should be included in files. A separate script (deid_mrd.m) can be used to remove scan date in order to have fully deidentified raw data files.
 ## Metadata common to all files
@@ -22,7 +22,7 @@ In order to facilitate reconstruction and analysis of images, the following meta
 - **Scanner Information: vendor**: header.acquisitionSystemInformation.systemVendor
 - **Scanner Information: Model**: header.acquisitionSystemInformation.systemModel
 - **Location (Site) of data acquisition**: header.acquisitionSystemInformation.institutionName
-- **Study date** (first of the month in which data were acquired): header.studyInformation.studyDate
+- **Study date**: header.studyInformation.studyDate
 - **Participant ID**: header.subjectInformation.patientID
 - **Encoded k-space, trajectory type (Cartesian for ventilation)**: header.encoding.trajectory
 - **Encoded k-space, FOV in x direction**: header.encoding.encodedSpace.fieldOfView_mm.x
@@ -72,34 +72,42 @@ This file is generated and has the same looping and metadata information as the 
 
 ### Diffusion (ParticipantID_diff.h5)
 This file is generated and has the same looping and metadata information as ventilation, with the following exceptions:
-- bvalue looping is under contrast
+- bvalue looping is stored under contrast
 - the bvalue for each acquired line is stored in acqblock.head.user_float(1,line)
 
 ### Calibration (ParticipantID_cali.h5)
 - The number of the acquired spectra are stored in the looping variables both as kspace_encode_step_1 and repetion
-- They frequency at which spectra are acquired is stored under contrast (1 for dissolved, 0 for gas)
+- They frequency at which spectra are acquired is stored under contrast (2 for dissolved, 1 for gas)
 
 **Additional Metadata**
-- **TR (in ms)**: header.sequenceParameters.TR
-- **Gas Flip Angle**: header.sequenceParameters.flipAngle_deg(1)
-- **Dissolved Flip Angle**: header.sequenceParameters.flipAngle_deg(2)
+- **TR (in ms)**: header.sequenceParameters.TR 
+- **Gas Flip Angle**: header.sequenceParameters.flipAngle_deg(0)
+- **Dissolved Flip Angle**: header.sequenceParameters.flipAngle_deg(1)
 - **TE (in ms)**: header.sequenceParameters.TE
-- **Dwell Time (in us)**: header.encoding.trajectoryDescription.userParameterDouble(1).value
-- **Gas Frequency (in Hz)**: header.encoding.trajectoryDescription.userParameterDouble(2).value
-- **Dissolved Frequency (in Hz)**: header.encoding.trajectoryDescription.userParameterDouble(3).value
+- **Dwell Time (in us)**: AcquisitionHeader.sample_time_us
+- **Gas Frequency (in Hz)**: header.userParameters.userParameterLong.xe_center_frequency
+- **Dissolved Offset Frequency (in Hz)**: header.userParameters.userParamterLong.xe_dissolved_offset_frequency
 
 ### Gas Exchange (ParticipantID_dixon.h5)
 Because the gas exchange data is collected using 3D radial trajectories, it is important to store the trajectories alongside the imaging data.
 - The radial projection being acquired is stored both under scan_counter and kspace_encode_step_1
   - data is stored under the data label, trajectories under the traj label
-- Similar to calibration, the frequency at which projections are acquired is stored under contrast (1 for dissolved, 0 for gas)
+- Similar to calibration, the frequency at which projections are acquired is stored under contrast (2 for dissolved, 1 for gas)
+- Normal Imaging Data will have AcquisitionHeader.measurement_uid = 0. "bonus" spectra will have AcquisitionHeader.measurement_uid = 1
 
 **Additional Metadata**
-- **TR (in ms)**: header.sequenceParameters.TR
+- **TR (in ms)**: header.sequenceParameters.TR (gas is index 0, dissolved is index 1)
 - **Gas Flip Angle**: header.sequenceParameters.flipAngle_deg(1)
 - **Dissolved Flip Angle**: header.sequenceParameters.flipAngle_deg(2)
 - **TE (in ms)**: header.sequenceParameters.TE
-- **Dwell Time (in us)**: header.encoding.trajectoryDescription.userParameterDouble(1).value
-- **Ramp Time (in us)**: header.encoding.trajectoryDescription.userParameterDouble(2).value
-- **Gas Frequency (in Hz)**: header.encoding.trajectoryDescription.userParameterDouble(3).value
-- **Dissolved Frequency (in Hz)**: header.encoding.trajectoryDescription.userParameterDouble(4).value
+- **Dwell Time (in us)**: AcquisitionHeader.sample_time_us
+- **Ramp Time (in us)**: header.encoding[0].trajectoryDescription.userParameterLong.ramp_time
+- **Gas Frequency (in Hz)**: header.userParameters.userParameterLong.xe_center_frequency
+- **Dissolved Offset Frequency (in Hz)**: header.userParameters.userParamterLong.xe_dissolved_offset_frequency
+
+### Gas Exchange (ParticipantID_proton.h5)
+This file will be structured largely the same as the gas exchange data. Exceptions include:
+- **TR (in ms)** has only a single value
+- **Flip Angle** has only a single value
+- **Gas Frequency (in Hz)** and **Dissolved Offset Frequency (in Hz)** are not stored
+- The contrast for each acquisition should be set to 0.

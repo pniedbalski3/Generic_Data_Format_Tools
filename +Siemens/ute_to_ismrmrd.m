@@ -14,15 +14,15 @@ if nargin == 0
     [ute_file,mypath] = uigetfile('*.dat','Select Anatomic UTE Raw Data file');
     Subj_ID = inputdlg('Subject ID','Input Subject ID',[1 50]); % Or maybe better to prompt user to type in Subject ID?
     Subj_ID = Subj_ID{1};
-    mrdfile = fullfile(mypath,[Subj_ID '_ute.h5']);
+    mrdfile = fullfile(mypath,[Subj_ID '_proton.h5']);
 elseif nargin == 1
     [mypath,~,~] = fileparts(ute_file); 
     Subj_ID = inputdlg('Subject ID','Input Subject ID',[1 50]); % Or maybe better to prompt user to type in Subject ID?
     Subj_ID = Subj_ID{1};
-    mrdfile = fullfile(mypath,[Subj_ID '_ute.h5']);
+    mrdfile = fullfile(mypath,[Subj_ID '_proton.h5']);
 elseif nargin == 2
     [mypath,~,~] = fileparts(ute_file); 
-    mrdfile = fullfile(mypath,[Subj_ID '_ute.h5']);
+    mrdfile = fullfile(mypath,[Subj_ID '_proton.h5']);
 end
 
 %Make sure file has .h5 extension
@@ -67,7 +67,7 @@ for acqno = 1:nY
     acqblock.head.scan_counter(acqno) = acqno-1;
     acqblock.head.idx.kspace_encode_step_1(acqno) = acqno-1;
     acqblock.head.idx.repetition(acqno) = 0;
-    
+    acqblock.head.idx.contrast(acqno) = 0;
     % Set the flags
     acqblock.head.flagClearAll(acqno);
     if acqno == 1
@@ -110,8 +110,8 @@ header.acquisitionSystemInformation.institutionName = twix.hdr.Dicom.Institution
 scanDate = twix.hdr.Phoenix.tReferenceImage0; 
 scanDate = strsplit(scanDate,'.');
 scanDate = scanDate{end};
-scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
-%scanDateStr = string(datetime(str2double(scanDate(1:4)),str2double(scanDate(5:6)),1));
+%scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
+scanDateStr = string(datetime(str2double(scanDate(1:4)),str2double(scanDate(5:6)),scanDate(7:8)));
 
 header.studyInformation.studyDate = scanDateStr;
 header.subjectInformation.patientID = Subj_ID;

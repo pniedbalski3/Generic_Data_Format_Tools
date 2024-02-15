@@ -164,13 +164,13 @@ if ismember(3,Files_Acquired)
 end
 if ismember(4,Files_Acquired)
     %gx2mrd(Subj_ID);
-    % if ispc
-    %     All_files = dir(fullfile(output_dir,'**\*'));
-    % else
-    %     All_files = dir(fullfile(output_dir,'**/*'));
-    % end
-    % 
-    All_files = dir(fullfile(output_dir,'Deidentified_Imaging_Data'));
+    if ispc
+        All_files = dir(fullfile(output_dir,'**\*'));
+    else
+        All_files = dir(fullfile(output_dir,'**/*'));
+    end
+
+    %All_files = dir(fullfile(output_dir,'Deidentified_Imaging_Data'));
 
     All_files = struct2cell(All_files);
     
@@ -178,7 +178,10 @@ if ismember(4,Files_Acquired)
     
     % Need to find cali.h5, vent.h5, ventanat.h5 diff.h5, dixon.h5, ute.h5 
     
-    dixon_indx = find(contains(filenames,'dixon.h5') & contains(filenames,'DeID'));
+    dixon_indx = find(contains(filenames,'dixon.h5'));
+    if length(dixon_indx) > 1
+        dixon_indx = dixon_indx(1);
+    end
     gx_file = fullfile(All_files(2,dixon_indx),All_files(1,dixon_indx));
     gx_file = gx_file{1};
     % [file_name,file_path] = uigetfile('.h5','Select Dixon MRD File');

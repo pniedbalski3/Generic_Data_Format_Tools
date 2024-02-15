@@ -169,7 +169,7 @@ acqblock.head.active_channels(:) = 1;
 %acqblock.head.trajectory_dimensions = 3*ones(1,2*nY);
 
 for i = 1:size(PostGas,2)
-    acqblock.head.measurement_uid(i) = 2; %Identify the spectra easily
+    acqblock.head.measurement_uid(i) = 1; %Identify the spectra easily
     acqblock.head.scan_counter(i) = i-1;
     acqblock.head.idx.kspace_encode_step_1(i) = i-1;
     acqblock.head.idx.repetition(i) = 0;

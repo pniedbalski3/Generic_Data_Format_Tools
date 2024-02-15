@@ -94,6 +94,7 @@ Because the gas exchange data is collected using 3D radial trajectories, it is i
   - data is stored under the data label, trajectories under the traj label
 - Similar to calibration, the frequency at which projections are acquired is stored under contrast (2 for dissolved, 1 for gas)
 - Normal Imaging Data will have AcquisitionHeader.measurement_uid = 0. "bonus" spectra will have AcquisitionHeader.measurement_uid = 1
+- For multi-echo data, the echo is stored under "set" (count up from 1)
 
 **Additional Metadata**
 - **TR (in ms)**: header.sequenceParameters.TR (gas is index 0, dissolved is index 1)

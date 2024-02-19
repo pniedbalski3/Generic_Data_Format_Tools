@@ -110,8 +110,8 @@ header.acquisitionSystemInformation.institutionName = twix.hdr.Dicom.Institution
 scanDate = twix.hdr.Phoenix.tReferenceImage0; 
 scanDate = strsplit(scanDate,'.');
 scanDate = scanDate{end};
-%scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
-scanDateStr = string(datetime(str2double(scanDate(1:4)),str2double(scanDate(5:6)),scanDate(7:8)));
+scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
+%scanDateStr = string(datetime(str2double(scanDate(1:4)),str2double(scanDate(5:6)),scanDate(7:8)));
 
 header.studyInformation.studyDate = scanDateStr;
 header.subjectInformation.patientID = Subj_ID;

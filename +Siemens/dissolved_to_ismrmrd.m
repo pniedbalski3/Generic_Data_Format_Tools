@@ -207,11 +207,11 @@ header.encoding.encodingLimits.repetition.center = 0;
 % Custom trajectory parameters
 
 a(1).name = "rampTime";
-a(1).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{8};
+a(1).value = Xe_Dat_twix.hdr.MeasYaps.sWipMemBlock.alFree{8};
 up(1).name = "xe_center_frequency";
-up(1).value = twix_obj.hdr.Dicom.lFrequency;
+up(1).value = Xe_Dat_twix.hdr.Dicom.lFrequency;
 up(2).name = "xe_dissolved_offset_frequency";
-up(2).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{5};
+up(2).value = Xe_Dat_twix.hdr.MeasYaps.sWipMemBlock.alFree{5};
 
 header.encoding.trajectoryDescription.identifier = "Custom Trajectory Info";
 header.encoding.trajectoryDescription.userParameterDouble = a;

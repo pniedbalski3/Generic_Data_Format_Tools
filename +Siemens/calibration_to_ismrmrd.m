@@ -10,6 +10,7 @@ function calibration_to_ismrmrd(Cal_file,Subj_ID,mrdfile)
 %Make this so it can be done with just the name of the function if desired:
 if nargin == 0
     [Cal_file,mypath] = uigetfile('*.dat','Select Calibration Raw Data file');
+    Cal_file = fullfile(mypath,Cal_file);
     Subj_ID = inputdlg('Subject ID','Input Subject ID',[1 50]); % Or maybe better to prompt user to type in Subject ID?
     Subj_ID = Subj_ID{1};
     mrdfile = fullfile(mypath,[Subj_ID '_calibration.h5']);
@@ -52,16 +53,27 @@ DisFA = Cal_Dat_twix.hdr.MeasYaps.adFlipAngleDegree{1};
 FOV = Cal_Dat_twix.hdr.Config.ReadFoV;
 %Does the location of frequency offset change with different versions?
 freq_offset = Cal_Dat_twix.hdr.MeasYaps.sWipMemBlock.alFree{5};
+
+
 % I think in an older version of John's code, this is in the 2 spot 
 nDis = Cal_Dat_twix.hdr.Phoenix.sWipMemBlock.alFree{3};
 if nDis == 1
     nDis = Cal_Dat_twix.hdr.Phoenix.sWipMemBlock.alFree{2}; %It seems like we should preserve this information.
 end
-scanDate = Cal_Dat_twix.hdr.Phoenix.tReferenceImage0; 
-scanDate = strsplit(scanDate,'.');
-scanDate = scanDate{end};
-%scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
-scanDateStr = string(datetime(str2double(scanDate(1:4)),str2double(scanDate(5:6)),scanDate(7:8)));
+try
+    scanDate = Cal_Dat_twix.hdr.Phoenix.tReferenceImage0; 
+    scanDate = strsplit(scanDate,'.');
+    scanDate = scanDate{end};
+    scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
+   % scanDateStr = string(datetime(str2double(scanDate(1:4)),str2double(scanDate(5:6)),scanDate(7:8)));
+catch
+    scanDate = Cal_Dat_twix.hdr.Meas.SeriesLOID;
+    scanDate = strsplit(scanDate,'.');
+    scanDate = char(scanDate(10));
+    scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
+   % scanDateStr = string(datetime(str2double(scanDate(1:4)),str2double(scanDate(5:6)),scanDate(7:8)));
+end
+
 
 %Read data
 data = squeeze(double(Cal_Dat_twix.image()));
@@ -74,7 +86,7 @@ acqblock = ismrmrd.Acquisition(nY);
 
 acqblock.head.version(:) = 1;
 acqblock.head.number_of_samples(:) = nX;
-acqblock.head.sample_time_us(:) = dwell_time * 1e6; %dwell time currently in s
+acqblock.head.sample_time_us(:) = dwell_time; %dwell time currently in s
 acqblock.head.active_channels(:) = 1;
 
 for acqno = 1:nY
@@ -121,7 +133,11 @@ header.acquisitionSystemInformation.systemVendor = Cal_Dat_twix.hdr.Dicom.Manufa
 header.acquisitionSystemInformation.systemModel = Cal_Dat_twix.hdr.Dicom.ManufacturersModelName;
 header.acquisitionSystemInformation.institutionName = Cal_Dat_twix.hdr.Dicom.InstitutionName;
 
-header.measurementInformation.scandate = scanDateStr;
+% scanDate = twix_obj.hdr.Phoenix.tReferenceImage0; 
+% scanDate = strsplit(scanDate,'.');
+% scanDate = scanDate{end};
+% scanDateStr = [scanDate(1:4),'-',scanDate(5:6),'-',scanDate(7:8)];
+header.studyInformation.studyDate = scanDateStr;
 header.measurementInformation.patientPosition = '';
 %header.studyInformation.studyDate = ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-' h.rdb_hdr.scan_date(4:5)];
 header.subjectInformation.patientID = Subj_ID;

@@ -11,7 +11,7 @@ if nargin < 3
     Seq_Name = 'Unknown';
 else
     Seq_Name = twix.hdr.Config.SequenceFileName;
-    if str2double(Seq_Name((end-3):end)) >= 2102
+    if str2double(Seq_Name((end-3):end)) >= 2102 || contains(Seq_Name,'KUMC')
         try
             RU = twix.hdr.MeasYaps.sWipMemBlock.alFree{8};
         catch

@@ -177,7 +177,8 @@ header.measurementInformation.patientPosition = '';
 header.subjectInformation.patientID = Subj_ID;
 
 
-header.sequenceParameters.TR = Params.TR;
+header.sequenceParameters.TR(1) = Params.TR(1);
+header.sequenceParameters.TR(2) = Params.TR(2);
 header.sequenceParameters.flipAngle_deg(1) = Params.GasFA;
 header.sequenceParameters.flipAngle_deg(2) = Params.DisFA;
 header.sequenceParameters.TE = Params.TE;%te90 + 40e-6;
@@ -206,17 +207,22 @@ header.encoding.encodingLimits.repetition.center = 0;
 
 % Custom trajectory parameters
 
-a(1).name = "rampTime";
-a(1).value = Xe_Dat_twix.hdr.MeasYaps.sWipMemBlock.alFree{8};
-up(1).name = "xe_center_frequency";
-up(1).value = Xe_Dat_twix.hdr.Dicom.lFrequency;
-up(2).name = "xe_dissolved_offset_frequency";
-up(2).value = Xe_Dat_twix.hdr.MeasYaps.sWipMemBlock.alFree{5};
+a(1).name = "ramp_time";
+a(1).value = Params.Ramp_Time;
+a(2).name = "xe_center_frequency";
+a(2).value = Xe_Dat_twix.hdr.Dicom.lFrequency;
+a(3).name = "xe_dissolved_offset_frequency";
+a(3).value = Params.freq_offset;
+
+b(1).name = "orientation";
+b(2).value = "coronal";
 
 header.encoding.trajectoryDescription.identifier = "Custom Trajectory Info";
-header.encoding.trajectoryDescription.userParameterDouble = a;
+header.encoding.trajectoryDescription.userParameterDouble = [];
 header.encoding.trajectoryDescription.userParameterLong = [];
-header.userParameters.userParameterLong = up;
+header.userParameters.userParameterLong = a;
+header.userParameters.userParameterString = [];
+header.userParameters.userParameterString = b;
 
 %% Serialize and write to the data set
 xmlstring = ismrmrd.xml.serialize(header);

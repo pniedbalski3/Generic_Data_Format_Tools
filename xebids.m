@@ -179,15 +179,24 @@ if ismember(4,Files_Acquired)
     % Need to find cali.h5, vent.h5, ventanat.h5 diff.h5, dixon.h5, ute.h5 
     
     dixon_indx = find(contains(filenames,'dixon.h5'));
+    iowa = 0;
     if length(dixon_indx) > 1
         dixon_indx = dixon_indx(1);
+    elseif length(dixon_indx) < 1
+        dixon_indx = find(contains(filenames,'dissolved.'));
+        iowa = 1;
     end
+
     gx_file = fullfile(All_files(2,dixon_indx),All_files(1,dixon_indx));
     gx_file = gx_file{1};
     % [file_name,file_path] = uigetfile('.h5','Select Dixon MRD File');
     % gx_file = fullfile(file_path,file_name);
+    
     cal_file = strrep(gx_file,'dixon','calibration');
     anat_file = strrep(gx_file,'dixon','proton');
+    if iowa
+        cal_file = strrep(gx_file,'dissolved','calibration');
+    end
    
     gx_dir = fullfile(sub_dir,'xegx');
     if ~isfolder(gx_dir)
@@ -195,6 +204,8 @@ if ismember(4,Files_Acquired)
     end
     copyfile(gx_file,gx_dir);
     copyfile(cal_file,gx_dir);
-    copyfile(anat_file,gx_dir);
+    if iowa == 0
+        copyfile(anat_file,gx_dir);
+    end
 end
 

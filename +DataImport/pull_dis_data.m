@@ -145,7 +145,8 @@ switch Ver
         Gas_Traj = DataImport.spiral_coords_from_dat(traj_twix,Xe_Dat_twix);
         
         Params.imsize = Xe_Dat_twix.hdr.MeasYaps.sKSpace.lBaseResolution;
-        Params.TR = ((Xe_Dat_twix.hdr.MeasYaps.alTR{1}+Xe_Dat_twix.hdr.MeasYaps.alTR{2})/1000);
+        Params.TR(1) = ((Xe_Dat_twix.hdr.MeasYaps.alTR{1})/1000);
+        Params.TR(2) = (Xe_Dat_twix.hdr.MeasYaps.alTR{2})/1000;
         Params.TE = (Xe_Dat_twix.hdr.MeasYaps.alTE{1}/1000);
         Params.GasFA = Xe_Dat_twix.hdr.MeasYaps.adFlipAngleDegree{2};
         Params.DisFA = Xe_Dat_twix.hdr.MeasYaps.adFlipAngleDegree{1};
@@ -180,7 +181,8 @@ switch Ver
 
         Gas_Traj = DataImport.spiral_coords_from_dat(traj_twix,Xe_Dat_twix);
         Params.imsize = Xe_Dat_twix.hdr.MeasYaps.sKSpace.lBaseResolution;
-        Params.TR = ((Xe_Dat_twix.hdr.MeasYaps.alTR{1}+Xe_Dat_twix.hdr.MeasYaps.alTR{2})/1000);
+        Params.TR(1) = ((Xe_Dat_twix.hdr.MeasYaps.alTR{1})/1000);
+        Params.TR(2) = (Xe_Dat_twix.hdr.MeasYaps.alTR{2})/1000;
         Params.TE = (Xe_Dat_twix.hdr.MeasYaps.alTE{1}/1000);
         Params.GasFA = Xe_Dat_twix.hdr.MeasYaps.adFlipAngleDegree{2};
         Params.DisFA = Xe_Dat_twix.hdr.MeasYaps.adFlipAngleDegree{1};

@@ -53,11 +53,13 @@ DisFA = Cal_Dat_twix.hdr.MeasYaps.adFlipAngleDegree{1};
 FOV = Cal_Dat_twix.hdr.Config.ReadFoV;
 %Does the location of frequency offset change with different versions?
 freq_offset = Cal_Dat_twix.hdr.MeasYaps.sWipMemBlock.alFree{5};
-
+if isempty(freq_offset)% <6000
+    freq_offset = Cal_Dat_twix.hdr.MeasYaps.sWipMemBlock.alFree{4};
+end
 
 % I think in an older version of John's code, this is in the 2 spot 
 nDis = Cal_Dat_twix.hdr.Phoenix.sWipMemBlock.alFree{3};
-if nDis == 1
+if isempty(nDis)
     nDis = Cal_Dat_twix.hdr.Phoenix.sWipMemBlock.alFree{2}; %It seems like we should preserve this information.
 end
 try

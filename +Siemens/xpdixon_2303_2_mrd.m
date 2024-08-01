@@ -256,17 +256,22 @@ header.encoding.encodingLimits.repetition.center = 0;
 
 %up(1).name = "dwellTime";
 %up(1).value = Dwell * 1e6; %Convert from s to us
-a(1).name = "rampTime";
+a(1).name = "ramp_time";
 a(1).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{8};
-up(1).name = "129Xe_center_frequency";
-up(1).value = twix_obj.hdr.Dicom.lFrequency;
-up(2).name = "129Xe_dissolved_offset_frequency";
-up(2).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{5};
+a(2).name = "xe_center_frequency";
+a(2).value = twix_obj.hdr.Dicom.lFrequency;
+a(3).name = "xe_dissolved_offset_frequency";
+a(3).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{5};
+
+% b(1).name = "orientation";
+% b(2).value = "coronal";
 
 header.encoding.trajectoryDescription.identifier = "Custom Trajectory Info";
-header.encoding.trajectoryDescription.userParameterDouble = a;
+header.encoding.trajectoryDescription.userParameterDouble = [];
 header.encoding.trajectoryDescription.userParameterLong = [];
-header.userParameters.userParameterLong = up;
+header.userParameters.userParameterLong = a;
+% header.userParameters.userParameterString = [];
+% header.userParameters.userParameterString = b;
 
 %% Serialize and write to the data set
 xmlstring = ismrmrd.xml.serialize(header);

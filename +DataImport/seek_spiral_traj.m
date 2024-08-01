@@ -61,7 +61,7 @@ if ~isnan(proper_traj)
     if length(traj_twix)>1
         traj_twix = traj_twix{2};
     end
-    traj = Tools.spiral_coords_from_dat(traj_twix,twix_obj);
+    traj = DataImport.spiral_coords_from_dat(traj_twix,twix_obj);
 else
     %Hardcode to no delay, although some may be needed - Let's try 
     %Delay = [3 3 3];

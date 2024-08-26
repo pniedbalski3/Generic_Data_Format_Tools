@@ -235,6 +235,9 @@ header.encoding.trajectory = 'radial';
 header.encoding.encodedSpace.fieldOfView_mm.x = twix_obj.hdr.Config.ReadFoV;
 header.encoding.encodedSpace.fieldOfView_mm.y = twix_obj.hdr.Config.ReadFoV;
 header.encoding.encodedSpace.fieldOfView_mm.z = twix_obj.hdr.Config.ReadFoV;
+header.encoding.reconSpace.fieldOfView_mm.x = twix_obj.hdr.Config.ReadFoV;
+header.encoding.reconSpace.fieldOfView_mm.y = twix_obj.hdr.Config.ReadFoV;
+header.encoding.reconSpace.fieldOfView_mm.z = twix_obj.hdr.Config.ReadFoV;
 header.encoding.encodedSpace.matrixSize.x = twix_obj.hdr.MeasYaps.sKSpace.lBaseResolution;
 header.encoding.encodedSpace.matrixSize.y = twix_obj.hdr.MeasYaps.sKSpace.lBaseResolution;
 header.encoding.encodedSpace.matrixSize.z = twix_obj.hdr.MeasYaps.sKSpace.lBaseResolution;
@@ -256,19 +259,22 @@ header.encoding.encodingLimits.repetition.center = 0;
 
 %up(1).name = "dwellTime";
 %up(1).value = Dwell * 1e6; %Convert from s to us
-a(1).name = "ramp_time";
-a(1).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{8};
-a(2).name = "xe_center_frequency";
-a(2).value = twix_obj.hdr.Dicom.lFrequency;
-a(3).name = "xe_dissolved_offset_frequency";
-a(3).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{5};
+%a(1).name = "ramp_time";
+%a(1).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{8};
+a(1).name = "xe_center_frequency";
+a(1).value = twix_obj.hdr.Dicom.lFrequency;
+a(2).name = "xe_dissolved_offset_frequency";
+a(2).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{5};
+
+b(1).name = "ramp_time";
+b(1).value = twix_obj.hdr.MeasYaps.sWipMemBlock.alFree{8};
 
 % b(1).name = "orientation";
 % b(2).value = "coronal";
 
 header.encoding.trajectoryDescription.identifier = "Custom Trajectory Info";
 header.encoding.trajectoryDescription.userParameterDouble = [];
-header.encoding.trajectoryDescription.userParameterLong = [];
+header.encoding.trajectoryDescription.userParameterLong = b;
 header.userParameters.userParameterLong = a;
 % header.userParameters.userParameterString = [];
 % header.userParameters.userParameterString = b;

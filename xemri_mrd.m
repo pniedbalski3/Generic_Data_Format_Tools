@@ -1,8 +1,9 @@
-function xemri_mrd()
+function xemri_mrd(Subj_ID)
 
-Subj_ID = inputdlg('Participant ID','Input Participant ID',[1 50]); % Prompt User for Participant ID
-Subj_ID = Subj_ID{1};
-
+if nargin < 1
+    Subj_ID = inputdlg('Participant ID','Input Participant ID',[1 50]); % Prompt User for Participant ID
+    Subj_ID = Subj_ID{1};
+end
 Contrasts = {'Ventilation','Diffusion','Gas Exchange'};
 
 Files_Acquired = listdlg('PromptString',{'What Contrasts were Collected?',...

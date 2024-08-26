@@ -135,9 +135,9 @@ switch Ver
         fid = Xe_Raw.rawdata;
         Dis_Fid = fid(1:2:(end-1),:);
         Dis_Fid(:,65:end) = [];
-        Dis_Fid = Dis_Fid';
+        Dis_Fid = transpose(Dis_Fid);
         Gas_Fid = fid(2:2:end,:);
-        Gas_Fid = Gas_Fid';
+        Gas_Fid = transpose(Gas_Fid);
         Dis_Traj = DataImport.get_allinone_distraj(Dis_Fid);
         traj_file = fullfile(parent_path,'\Traj\Vent_GasExchange_20210819_Traj.dat');
         traj_twix = DataImport.mapVBVD(traj_file);
@@ -150,7 +150,7 @@ switch Ver
         Params.TE = (Xe_Dat_twix.hdr.MeasYaps.alTE{1}/1000);
         Params.GasFA = Xe_Dat_twix.hdr.MeasYaps.adFlipAngleDegree{2};
         Params.DisFA = Xe_Dat_twix.hdr.MeasYaps.adFlipAngleDegree{1};
-        Params.freq_offset = Xe_Dat_twix.hdr.MeasYaps.sWipMemBlock.alFree{5};
+        Params.freq_offset = Xe_Dat_twix.hdr.MeasYaps.sWipMemBlock.alFree{17};
         Params.freq = Xe_Dat_twix.hdr.Dicom.lFrequency;
         Params.Dwell = Xe_Dat_twix.hdr.MeasYaps.sRXSPEC.alDwellTime{1,1}*1e-9;
         scanDate = Xe_Dat_twix.hdr.Phoenix.tReferenceImage0; 
@@ -170,9 +170,9 @@ switch Ver
         Dis_Fid = fid(1:2:(end-1),:);
         %Again could do something more elegant, but start with easy
         Dis_Fid(:,65:end) = [];
-        Dis_Fid = Dis_Fid';
+        Dis_Fid = transpose(Dis_Fid);
         Gas_Fid = fid(2:2:end,:);
-        Gas_Fid = Gas_Fid';
+        Gas_Fid = transpose(Gas_Fid);
         Post_Cal = fid(end,1:512);
         Dis_Traj = DataImport.get_allinone_distraj(Dis_Fid);
         %Need to fix this path so it's more generic!

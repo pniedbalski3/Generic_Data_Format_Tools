@@ -75,40 +75,7 @@ This file is generated and has the same looping and metadata information as vent
 - bvalue looping is stored under contrast
 - the bvalue for each acquired line is stored in acqblock.head.user_float(1,line)
 
-### Calibration (ParticipantID_cali.h5)
-- The number of the acquired spectra are stored in the looping variables both as kspace_encode_step_1 and repetion
-- They frequency at which spectra are acquired is stored under contrast (2 for dissolved, 1 for gas)
+### Calibration and Gas Exchange Specifications can be found at the 129Xe MRI Clinical Trials Consortium Page:
+https://github.com/Xe-MRI-CTC/xemrd-specification
 
-**Additional Metadata**
-- **TR (in ms)**: header.sequenceParameters.TR 
-- **Gas Flip Angle**: header.sequenceParameters.flipAngle_deg(0)
-- **Dissolved Flip Angle**: header.sequenceParameters.flipAngle_deg(1)
-- **TE (in ms)**: header.sequenceParameters.TE
-- **Dwell Time (in us)**: AcquisitionHeader.sample_time_us
-- **Gas Frequency (in Hz)**: header.userParameters.userParameterLong.xe_center_frequency
-- **Dissolved Offset Frequency (in Hz)**: header.userParameters.userParamterLong.xe_dissolved_offset_frequency
 
-### Gas Exchange (ParticipantID_dixon.h5)
-Because the gas exchange data is collected using 3D radial trajectories, it is important to store the trajectories alongside the imaging data.
-- The radial projection being acquired is stored both under scan_counter and kspace_encode_step_1
-  - data is stored under the data label, trajectories under the traj label
-- Similar to calibration, the frequency at which projections are acquired is stored under contrast (2 for dissolved, 1 for gas)
-- Normal Imaging Data will have AcquisitionHeader.measurement_uid = 0. "bonus" spectra will have AcquisitionHeader.measurement_uid = 1
-- For multi-echo data, the echo is stored under "set" (count up from 1)
-
-**Additional Metadata**
-- **TR (in ms)**: header.sequenceParameters.TR (gas is index 0, dissolved is index 1)
-- **Gas Flip Angle**: header.sequenceParameters.flipAngle_deg(1)
-- **Dissolved Flip Angle**: header.sequenceParameters.flipAngle_deg(2)
-- **TE (in ms)**: header.sequenceParameters.TE
-- **Dwell Time (in us)**: AcquisitionHeader.sample_time_us
-- **Ramp Time (in us)**: header.encoding[0].trajectoryDescription.userParameterLong.ramp_time
-- **Gas Frequency (in Hz)**: header.userParameters.userParameterLong.xe_center_frequency
-- **Dissolved Offset Frequency (in Hz)**: header.userParameters.userParamterLong.xe_dissolved_offset_frequency
-
-### Gas Exchange (ParticipantID_proton.h5)
-This file will be structured largely the same as the gas exchange data. Exceptions include:
-- **TR (in ms)** has only a single value
-- **Flip Angle** has only a single value
-- **Gas Frequency (in Hz)** and **Dissolved Offset Frequency (in Hz)** are not stored
-- The contrast for each acquisition should be set to 0.

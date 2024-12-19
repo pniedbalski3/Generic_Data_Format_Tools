@@ -176,9 +176,13 @@ header.measurementInformation.patientPosition = '';
 %header.studyInformation.studyDate = ['20' h.rdb_hdr.scan_date(end-1:end) '-' h.rdb_hdr.scan_date(1:2) '-' h.rdb_hdr.scan_date(4:5)];
 header.subjectInformation.patientID = Subj_ID;
 
-
-header.sequenceParameters.TR(1) = Params.TR(1);
-header.sequenceParameters.TR(2) = Params.TR(2);
+try
+    header.sequenceParameters.TR(1) = Params.TR(1);
+    header.sequenceParameters.TR(2) = Params.TR(2);
+catch
+    header.sequenceParameters.TR(1) = Params.TR(1);
+    header.sequenceParameters.TR(2) = Params.TR(1);
+end
 header.sequenceParameters.flipAngle_deg(1) = Params.GasFA;
 header.sequenceParameters.flipAngle_deg(2) = Params.DisFA;
 header.sequenceParameters.TE = Params.TE;%te90 + 40e-6;

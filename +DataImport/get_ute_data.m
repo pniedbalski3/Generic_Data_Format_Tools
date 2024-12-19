@@ -17,11 +17,14 @@ data = squeeze(double(twix.image()));
 
 Seq_Name = twix.hdr.Config.SequenceFileName;
 
-if contains(Seq_Name,'xe_radial_Dixon')
+
+    
+if contains(Seq_Name,'SPIRAL')
+   % if contains(Seq_Name,'xe_radial_Dixon')
+    data = permute(data,[1 3 2]);
+    traj = DataImport.seek_spiral_traj(twix);
+else
     data = data(:,:,:,end);
     data = permute(data,[1 3 2]);
     traj = DataImport.gas_exchange_traj_gen(size(data,1),size(data,2),twix);
-elseif contains(Seq_Name,'SPIRAL')
-    data = permute(data,[1 3 2]);
-    traj = DataImport.seek_spiral_traj(twix);
 end

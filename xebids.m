@@ -162,6 +162,7 @@ if ismember(3,Files_Acquired)
         disp('No json file written');
     end
 end
+%%
 if ismember(4,Files_Acquired)
     %gx2mrd(Subj_ID);
     if ispc
